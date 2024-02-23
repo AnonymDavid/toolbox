@@ -4,7 +4,16 @@ from glob import glob
 import csv
 import os 
 
-def gps2csv(root:str):
+def gps2csv(root:str) -> None:
+    """
+    Convert GPS data from .mcap files to .csv format.
+
+    Args:
+        root (str): The root directory containing the .mcap files.
+
+    Returns:
+        None
+    """
     files = glob(f'{root}/bags/**/*.mcap')
 
     if not os.path.exists(f'{root}/csv'):
