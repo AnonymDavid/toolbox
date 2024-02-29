@@ -1,10 +1,10 @@
-from mcap_read import read_mcap
-from quaternion_functions import quaternion_to_euler
+from helper_functions.mcap_read import read_mcap
+from helper_functions.quaternion_functions import quaternion_to_euler
 from glob import glob
 import csv
 import os 
 
-def gps2csv(root:str) -> None:
+def gps2csv(root:str, topic:str="/current_pose") -> None:
     """
     Convert GPS data from .mcap files to .csv format.
 
@@ -22,7 +22,6 @@ def gps2csv(root:str) -> None:
     file_count = len(files)
     finished_file_counter = 0
 
-    tp = "/current_pose"
     for input in files:
         with open(f'{root}/csv/{os.path.splitext(os.path.basename(input))[0][:-4]}_gps.csv', 'w') as file:
             writert = csv.writer(file)
@@ -30,13 +29,13 @@ def gps2csv(root:str) -> None:
 
             t0 = 0
 
-            for topic, msg, timestamp in read_mcap(input):
-                if topic == tp:
+            for tp, msg, timestamp in read_mcap(input):
+                if tp == topic:
                     t0 = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
                     break
 
-            for topic, msg, timestamp in read_mcap(input):
-                if topic == tp:
+            for tp, msg, timestamp in read_mcap(input):
+                if tp == topic:
                     t = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9 - t0
                     
                     writert.writerow([t, msg.pose.position.x, msg.pose.position.y, msg.pose.position.z] + quaternion_to_euler(msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w))
