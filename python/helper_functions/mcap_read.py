@@ -2,7 +2,7 @@ from rclpy.serialization import deserialize_message
 from rosidl_runtime_py.utilities import get_message
 import rosbag2_py
 
-def read_mcap(input_bag: str):
+def read_mcap(input_bag: str, topics:list=[]):
     """
     Read messages from a given ROS2 mcap file.
 
@@ -11,6 +11,7 @@ def read_mcap(input_bag: str):
 
     Args:
         input_bag (str): The path to the input ROS bag file.
+        topics (list, optional): A list of topics to filter by. If empty, all topics are returned (default).
 
     Yields:
         tuple: A tuple containing with the topic name, message, and timestamp.
@@ -33,6 +34,8 @@ def read_mcap(input_bag: str):
 
     while reader.has_next():
         topic, data, timestamp = reader.read_next()
+        if topics and topic not in topics:
+            continue
         msg_type = get_message(typename(topic))
         msg = deserialize_message(data, msg_type)
         yield topic, msg, timestamp
