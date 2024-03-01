@@ -1,7 +1,28 @@
 from rclpy.serialization import deserialize_message
 from rosidl_runtime_py.utilities import get_message
 import rosbag2_py
-from typing import List
+from typing import List, Dict
+
+def msg2dict(msg, pretag:str="") -> Dict[str, any]:
+    """
+    Convert a ROS2 message to a dictionary.
+
+    Args:
+        msg (any): The ROS2 message object to convert.
+        pretag (str, optional): Prefix tag for the dictionary keys.
+
+    Returns:
+        Dict[str, any]: The dictionary representation of the message.
+    """
+    attributes:Dict[str, any]={}
+
+    for attr in msg.__slots__:
+        if hasattr(getattr(msg, attr), '__slots__'):
+            attributes.update(msg2dict(getattr(msg, attr), pretag="".join([pretag, attr.lstrip('_'), "."])))
+        else:
+            attributes[pretag + attr.lstrip('_')] = getattr(msg, attr)
+        
+    return attributes
 
 
 def read_mcap(input_bag: str, topics:List[str]=[]):
