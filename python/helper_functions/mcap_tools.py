@@ -1,8 +1,10 @@
 from rclpy.serialization import deserialize_message
 from rosidl_runtime_py.utilities import get_message
 import rosbag2_py
+from typing import List
 
-def read_mcap(input_bag: str, topics:list=[]):
+
+def read_mcap(input_bag: str, topics:List[str]=[]):
     """
     Read messages from a given ROS2 mcap file.
 
