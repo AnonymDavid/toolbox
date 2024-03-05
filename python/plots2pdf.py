@@ -7,7 +7,7 @@ import os
 from typing import List, Tuple
 
 
-def csv2pdf(root:str,
+def plots2pdf(root:str,
             x_headers:List[str],
             y_headers:List[str],
             x_axis_label:str,

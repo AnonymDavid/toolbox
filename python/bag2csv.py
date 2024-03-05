@@ -1,11 +1,13 @@
+import sys
+import os
+sys.path.insert(0, os.path.dirname(__file__))
+
 from helper_functions.mcap_tools import read_mcap, msg2dict
 from helper_functions.quaternion_tools import quaternion_to_euler
 from glob import glob
 import csv
-import os
 from typing import List, Tuple, Dict
 from dataclasses import dataclass
-
 
 def bag2csv(source:str, topic:str, output_folder:str="csv", stamp_to_seconds:bool=False, quaternion_to_rpy:bool=False, topic_in_header:bool=False, verbose:bool=True) -> None:
     """
@@ -115,5 +117,4 @@ def bag2csv(source:str, topic:str, output_folder:str="csv", stamp_to_seconds:boo
                 print(f'{counter}/{fileCount}\t{os.path.split(input)[-1]}')
 
     except ModuleNotFoundError as err:
-        print()
         raise ValueError("The topic has unknown message types. Try sourcing the workspace with the message definition and running the script again.\n" + str(err))
