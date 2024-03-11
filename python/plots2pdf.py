@@ -12,6 +12,8 @@ def plots2pdf(root:str,
             y_headers:List[str],
             x_axis_label:str,
             y_axis_label:str,
+            x_limits:Tuple[float,float]=(0,0),
+            y_limits:Tuple[float,float]=(0,0),
             plots_in_page:Tuple[int,int]=(3,1),
             plot_labels:List[str]=[],
             output_dir:str='plot',
@@ -30,6 +32,8 @@ def plots2pdf(root:str,
         y_headers (List[str]): The list of column headers to be used as the y-axis data for the plots.
         x_axis_label (str): The label for the x-axis.
         y_axis_label (str): The label for the y-axis.
+        x_limits (Tuple[float,float], optional): The limits for the x-axis. Leave at (0,0) to auto adjust. Defaults to (0,0).
+        y_limits (Tuple[float,float], optional): The limits for the y-axis. Leave at (0,0) to auto adjust. Defaults to (0,0).
         plots_in_page (Tuple[int,int], optional): The number of plots to be displayed in each page (row, column). Defaults to (3,1).
         plot_labels (List[str], optional): The labels for each plot. Defaults to x and y data headers.
         output_dir (str, optional): The directory where the PDF file will be saved relative to root. Defaults to 'plot'.
@@ -86,7 +90,7 @@ def plots2pdf(root:str,
 
     fig = plt.figure(figsize=(8.3, 11.7))
 
-    with PdfPages(f'{root}/{output_dir}/steering.pdf') as pdf:
+    with PdfPages(f'{root}/{output_dir}/output.pdf') as pdf:
         for input in files:
             df = pd.read_csv(input)
 
@@ -98,6 +102,12 @@ def plots2pdf(root:str,
                 y = np.array(df[y_headers[i]])
 
                 sub.plot(x, y, label=(plot_labels[i] if plot_labels else f'{x_headers[i]} - {y_headers[i]}'))
+
+            if x_limits[0] != 0 or x_limits[1] != 0:
+                sub.set_xlim(x_limits)
+
+            if y_limits[0] != 0 or y_limits[1] != 0:
+                sub.set_ylim(y_limits)
 
             if grid:
                 sub.grid(linestyle='dashed', linewidth=0.5, alpha=1, dashes=(1,10,1,10))
