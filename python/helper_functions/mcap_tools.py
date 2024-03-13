@@ -20,7 +20,7 @@ def msg2dict(msg, pretag:str="") -> Dict[str, any]:
         if hasattr(getattr(msg, attr), '__slots__'):
             attributes.update(msg2dict(getattr(msg, attr), pretag="".join([pretag, attr.lstrip('_'), "."])))
         else:
-            if hasattr(getattr(msg, attr), '__iter__'):
+            if hasattr(getattr(msg, attr), '__iter__') and type(getattr(msg, attr)) is not str:
                 for i, item in enumerate(getattr(msg, attr)):
                     if hasattr(item, '__slots__'):
                         attributes.update(msg2dict(item, pretag="".join([pretag, attr.lstrip('_'), f"[{i}]."])))
