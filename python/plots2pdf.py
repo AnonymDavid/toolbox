@@ -121,7 +121,7 @@ def plots2pdf(root:str,
             file_counter += 1
             current_plot += 1
 
-            if current_plot > rownum*colnum:
+            if current_plot > rownum*colnum or file_counter == file_count:
                 if tight_layout:
                     fig.tight_layout()
                 pdf.savefig(fig)
