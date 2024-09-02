@@ -41,7 +41,7 @@ def bag2csv(source:str, topic:str, output_folder:str="csv", stamp_to_seconds:boo
         
         files = [source]
     elif os.path.isdir(source):
-        files = glob(f'{source}/**/*.mcap')
+        files = glob(f'{source}/**/*.mcap', recursive=True)
     else:
         raise ValueError("Invalid source. Must be a .mcap file or a directory containing .mcap files.")
     
