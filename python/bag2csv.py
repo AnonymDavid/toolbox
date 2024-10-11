@@ -40,13 +40,17 @@ def bag2csv(source:str, topic:str, output_folder:str="csv", stamp_to_seconds:boo
             raise ValueError("The source file does not exist.")
         
         files = [source]
+
+        sourceDir = os.path.dirname(os.path.abspath(source))
     elif os.path.isdir(source):
         files = glob(f'{source}/**/*.mcap', recursive=True)
+
+        sourceDir = os.path.abspath(source)
     else:
         raise ValueError("Invalid source. Must be a .mcap file or a directory containing .mcap files.")
     
-    if not os.path.exists(f'{source}/{output_folder}'):
-        os.mkdir(f'{source}/{output_folder}')
+    if not os.path.exists(f'{sourceDir}/{output_folder}'):
+        os.mkdir(f'{sourceDir}/{output_folder}')
 
 
     fileCount = len(files)
@@ -91,7 +95,7 @@ def bag2csv(source:str, topic:str, output_folder:str="csv", stamp_to_seconds:boo
                 headers.pop(idxs.w_idx)
         
         for input in files:
-            with open(f'{source}/{output_folder}/{os.path.splitext(os.path.basename(input))[0]}.csv', 'w') as file:
+            with open(f'{sourceDir}/{output_folder}/{os.path.splitext(os.path.basename(input))[0]}.csv', 'w') as file:
                 writert = csv.writer(file)
                 writert.writerow(headers)
                 
