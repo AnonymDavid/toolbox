@@ -2,7 +2,7 @@ from scipy.spatial.transform import Rotation as R
 from numpy import ndarray
 
 
-def euler_to_quaternion(roll:float, pitch:float, yaw:float, in_degrees:bool=True) -> ndarray:
+def euler_to_quaternion(roll:float, pitch:float, yaw:float, in_degrees:bool=False) -> ndarray:
     """
     Convert Euler angles to quaternion.
 
@@ -17,7 +17,7 @@ def euler_to_quaternion(roll:float, pitch:float, yaw:float, in_degrees:bool=True
     """
     return R.from_euler('xyz', [roll, pitch, yaw], degrees=in_degrees).as_quat()
 
-def quaternion_to_euler(x:float, y:float, z:float, w:float, in_degrees:bool=True) -> ndarray:
+def quaternion_to_euler(x:float, y:float, z:float, w:float, in_degrees:bool=False) -> ndarray:
     """
     Convert an quaternion to euler angles.
 
