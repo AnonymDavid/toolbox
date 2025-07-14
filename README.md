@@ -1,6 +1,6 @@
 # Toolbox
 ## Ubuntu git credential manager setup (HTTPS)
-### Install and configure GCM
+#### Install and configure GCM
 ```
 sudo apt update
 sudo apt install gnome-keyring
@@ -10,7 +10,7 @@ sudo apt --fix-broken install
 git-credential-manager configure
 git config --global credential.credentialStore secretservice
 ```
-### In case of error try these
+#### In case of error try these
 ```
 sudo apt install gnome-keyring
 ```
@@ -19,6 +19,7 @@ sudo apt install libsecret-1-dev
 ```
 
 ## Ubuntu mouse lag fix
+#### Run this in a terminal:
 ```
 sudo su -
 modprobe drm_kms_helper
@@ -28,7 +29,7 @@ echo "options drm_kms_helper poll=N" >> /etc/modprobe.d/local.conf
 ```
 
 ## Git branch name in CLI (Ubuntu)
-### In ~/.bashrc replace this:
+#### In ~/.bashrc replace this:
 ```
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
@@ -36,7 +37,7 @@ else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 ```
-### with this:
+#### with this:
 ```
 parse_git_branch() {
  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
