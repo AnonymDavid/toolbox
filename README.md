@@ -48,3 +48,12 @@ else
  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w $(parse_git_branch)\$ '
 fi
 ```
+
+## Git clone SSH submodules as HTML
+#### Add this to ~/.gitconfig
+```
+[url "https://github.com/"]
+    insteadOf = git://github.com/
+[url "https://github.com/"]
+    insteadOf = git@github.com:
+```
