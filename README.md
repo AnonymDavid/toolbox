@@ -1,5 +1,6 @@
 # Toolbox
-## Ubuntu git credential manager setup (HTTPS)
+## Ubuntu GIT authentication (HTTPS)
+### GCM
 #### Install and configure GCM
 ```
 sudo apt update
@@ -17,6 +18,17 @@ sudo apt install gnome-keyring
 ```
 sudo apt install libsecret-1-dev
 ```
+
+### Access token
+
+Put these lines into ~/.netrc:
+```
+machine <domain>
+login <username>
+password <personal_access_token>
+```
+
+Domain is usually `github.com`. Personal access token can be created in github settings under `developer settings`.
 
 ## Ubuntu mouse lag fix
 #### Run this in a terminal:
