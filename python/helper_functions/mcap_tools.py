@@ -70,3 +70,19 @@ def read_mcap(input_bag: str, topics:List[str]=[]):
         msg = deserialize_message(data, msg_type)
         yield topic, msg, timestamp
     del reader
+
+def get_mcap_topics(input_bag: str) -> List[str]:
+    """
+    Return all topic names found in a ROS2 MCAP bag.
+    """
+    reader = rosbag2_py.SequentialReader()
+    reader.open(
+        rosbag2_py.StorageOptions(uri=input_bag, storage_id="mcap"),
+        rosbag2_py.ConverterOptions(
+            input_serialization_format="cdr", output_serialization_format="cdr"
+        ),
+    )
+
+    topics = [topic.name for topic in reader.get_all_topics_and_types()]
+    del reader
+    return topics
