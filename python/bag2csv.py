@@ -100,9 +100,12 @@ def bag2csv(source:str, topic:str, output_folder:str="csv", stamp_to_seconds:boo
                     for idxs in quaternions:
                         headers.pop(idxs.w_idx)
                 
-                with open(f'{sourceDir}/{output_folder}/{os.path.splitext(os.path.basename(input))[0]}{current_topic.replace("/", "__")}.csv', 'w') as file:
+                filename_in_output_name = os.path.splitext(os.path.basename(input))[0] if len(files) > 1 else ""
+                out_file_name_base = f'{sourceDir}/{output_folder}/{filename_in_output_name}{current_topic.replace("/", "__")}'
+                
+                with open(f'{out_file_name_base}.csv', 'w') as file:
                     if verbose:
-                        print(f'Writing {topic} topic to {sourceDir}/{output_folder}/{os.path.splitext(os.path.basename(input))[0]}{current_topic.replace("/", "__")}.csv')
+                        print(f'Writing {topic} topic to {out_file_name_base}.csv')
                     
                     writert = csv.writer(file)
                     writert.writerow(headers)
